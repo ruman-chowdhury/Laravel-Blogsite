@@ -17,44 +17,44 @@
         </div>
         <!-- Vertical Layout | With Floating Label -->
 
-        <form action="{{ route('admin.post.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('author.post.update',$singleData->id) }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
 
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header bg-brown">
-                            <h2>Add New Post</h2>
+                        <div class="header">
+                            <h2>Update Post</h2>
                         </div>
 
                         <div class="body">
 
-                                <div class="form-group ">
-                                    <div class="form-line">
-                                        <label class="form-label">Title</label>
-                                        <input type="text" name="title" id="email_address" class="form-control">
-                                    </div>
+                            <div class="form-group ">
+                                <div class="form-line">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" name="title" id="email_address" class="form-control" value="{{ $singleData->title }}">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
+                            <div class="form-group">
 
-                                    <label for="cat">Select category</label>
-                                    <select id="cat" name="category" class="show-tick" data-live-search="true" >
+                                <label for="cat">Select category</label>
+                                <select id="cat" name="category" class="show-tick" data-live-search="true">
 
-                                        <option value="Education"> Education </option>
-                                        <option value="Health"> Health </option>
-                                        <option value="Motivation"> Motivation </option>
-                                        <option value="Religion"> Religion </option>
-                                        <option value="Technology"> Technology </option>
-                                        <option value="Others"> Others </option>
-                                    </select>
+                                    <option value="Education"> Education </option>
+                                    <option value="Health"> Health </option>
+                                    <option value="Motivation"> Motivation </option>
+                                    <option value="Religion"> Religion </option>
+                                    <option value="Technology"> Technology </option>
+                                    <option value="Others"> Others </option>
+                                </select>
 
-                                </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="form-label">Featured Image</label>
-                                    <input type="file" name="image" id="image" class="form-control">
-                                </div>
+                            <div class="form-group">
+                                <label class="form-label">Featured Image</label>
+                                <input type="file" name="image" id="image" class="form-control">
+                            </div>
 
                         </div>
                     </div>
@@ -71,9 +71,9 @@
                         </div>
 
 
-                         <div class="body">
-                             <textarea name="details" id="mytextarea"> </textarea>
-                         </div>
+                        <div class="body">
+                            <textarea name="details" id="mytextarea"> {{ $singleData->details }} </textarea>
+                        </div>
 
 
                     </div>
@@ -82,8 +82,8 @@
 
             <br>
             <div class="form-group">
-                <a type="button" href="{{ route('admin.post') }}" class="btn btn-danger waves-effect">Cancel</a>
-                <button type="submit" class="btn btn-primary waves-effect">Submit</button>
+                <a type="button" href="{{ route('author.post') }}" class="btn btn-danger waves-effect">Cancel</a>
+                <button type="submit" class="btn btn-primary waves-effect">Update</button>
             </div>
 
         </form>

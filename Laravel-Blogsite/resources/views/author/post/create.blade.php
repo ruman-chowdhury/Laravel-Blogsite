@@ -17,13 +17,30 @@
         </div>
         <!-- Vertical Layout | With Floating Label -->
 
-        <form action="{{ route('admin.post.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('author.post.store') }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
 
             <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+                <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header bg-brown">
+
+                        <div class="header bg-grey">
+                            <h2>Description</h2>
+                        </div>
+
+
+                        <div class="body">
+                            <textarea name="details" id="mytextarea"> </textarea>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header bg-amber">
                             <h2>Add New Post</h2>
                         </div>
 
@@ -62,27 +79,11 @@
             </div>
             <!-- Vertical Layout | With Floating Label -->
 
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="card">
 
-                        <div class="header">
-                            <h2>Description</h2>
-                        </div>
-
-
-                         <div class="body">
-                             <textarea name="details" id="mytextarea"> </textarea>
-                         </div>
-
-
-                    </div>
-                </div>
-            </div>
 
             <br>
             <div class="form-group">
-                <a type="button" href="{{ route('admin.post') }}" class="btn btn-danger waves-effect">Cancel</a>
+                <a type="button" href="{{ route('author.post') }}" class="btn btn-danger waves-effect">Cancel</a>
                 <button type="submit" class="btn btn-primary waves-effect">Submit</button>
             </div>
 

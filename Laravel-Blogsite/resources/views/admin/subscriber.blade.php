@@ -13,34 +13,18 @@
 
     <div class="container-fluid">
 
-        <div class="block-header">
-                <a class="btn btn-info waves-effect" href="{{ route('admin.post.create') }}">
-                    <i class="material-icons">add</i>
-                    <span>Add New Post</span>
-                </a>
-            </div>
-
             <!-- Exportable Table -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
 
-                        <div class="header bg-green">
+                        <div class="header bg-brown">
                             <h2 >
-                               All Posts
+                               All Subscriber
+                                <span class="badge bg-blue">{{ $subscriberList->count() }} </span>
                             </h2>
 
-                            <!-- Search Bar -->
-                            <div class="search-bar">
-                                <div class="search-icon">
-                                    <i class="material-icons">search</i>
-                                </div>
-                                <input type="text" placeholder="START TYPING...">
-                                <div class="close-search">
-                                    <i class="material-icons">close</i>
-                                </div>
-                            </div>
-                            <!-- #END# Search Bar -->
+
                         </div>
 
                         <div class="body">
@@ -49,14 +33,9 @@
                                     <thead>
                                         <tr>
                                             <th>Serial</th>
-                                            <th>Title</th>
-                                            <th>Author</th>
-                                            <th>
-                                                <i class="material-icons">visibility</i>
-                                            </th>
-                                            <th>Is Approved</th>
-                                            <th>Status</th>
+                                            <th>Email</th>
                                             <th>Created_at</th>
+                                            <th>Updated_at</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -64,51 +43,21 @@
                                     <tbody>
 
 @php $k=1; @endphp
-@forelse($allData as $row)
+@forelse($subscriberList as $row)
 
                                         <tr>
                                             <th> {{ $k++ }} </th>
-                                            <th> {{ ucwords( strtolower(Str::limit($row->title,'10')) ) }} </th>
-                                            <th> {{ $row->user->name }} </th>
-                                            <th></th>
-                                            <th>
-                                                @if($row->is_approved == true)
-
-                                                    <span class="badge bg-blue"> Approved </span>
-
-                                                @else
-
-                                                    <span class="badge bg-pink"> Pending </span>
-
-                                                @endif
-                                            </th>
-                                            <th>
-                                                @if($row->status == true)
-
-                                                    <span class="badge bg-blue"> Published </span>
-
-                                                @else
-
-                                                    <span class="badge bg-pink"> Pending </span>
-
-                                                @endif
-                                            </th>
+                                            <th> {{ $row->email }} </th>
                                             <th>{{ $row->created_at }}</th>
+                                            <th>{{ $row->updated_at }}</th>
                                             <th>
 
-                                                <a class="btn btn-dark waves-effect"  href="{{route('admin.post.view',$row->id)}}">
-                                                    <i class="material-icons">visibility</i>
-                                                </a>
-
-                                                <a class="btn btn-info btn-sm waves-effect" href="{{route('admin.post.edit',$row->id)}}">
-                                                    <i class="material-icons">edit</i>
-                                                </a>
-
-                                                <a class="btn btn-danger btn-sm waves-effect" href="{{route('admin.post.delete',$row->id)}}" onclick="return confirm('Are you sure to delete?')">
+                                                <button type="submit" class="btn btn-danger btn-sm waves-effect"  onclick="deleteinfo('{{ $row->id }}')">
                                                     <i class="material-icons">delete</i>
-                                                </a>
-
-
+                                                </button>
+                                                <form action="{{route('admin.subscriber.delete',$row->id)}}" method="post" id="form-id" style="display: none">
+                                                    {{ csrf_field() }}
+                                                </form>
 
                                             </th>
                                         </tr>
@@ -117,7 +66,7 @@
 @empty
 
     <tr>
-        <td colspan="8" class="text-center"> Data not Found! </td>
+        <td colspan="8" class="text-center"> Subscriber not Found! </td>
     </tr>
 
 @endforelse

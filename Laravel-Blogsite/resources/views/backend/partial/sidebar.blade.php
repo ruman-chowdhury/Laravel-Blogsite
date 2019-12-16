@@ -7,7 +7,9 @@
         </div>
 
         <div class="info-container">
-            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</div>
+            <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <strong> {{ Auth::user()->name }} </strong>
+            </div>
             <div class="email">{{ Auth::user()->email }}</div>
 
             <div class="btn-group user-helper-dropdown">
@@ -63,6 +65,20 @@
                     </a>
                 </li>
 
+                <li class="{{ Request::is('admin/post/pending') ? 'active':'' }}">
+                    <a href="{{ route('admin.post.pending') }}">
+                        <i class="material-icons">library_books</i>
+                        <span>Pending Posts</span>
+                    </a>
+                </li>
+
+                <li class="{{ Request::is('admin/subscriber') ? 'active':'' }}">
+                    <a href="{{ route('admin.subscriber') }}">
+                        <i class="material-icons">subscriptions</i>
+                        <span>Subscribers</span>
+                    </a>
+                </li>
+
                 <li class="header">System</li>
 
                 <li>
@@ -88,6 +104,13 @@
                     <a href="{{ route('author.dashboard') }}">
                         <i class="material-icons">dashboard</i>
                         <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <li class="{{ Request::is('author/post') ? 'active':'' }}">
+                    <a href="{{ route('author.post') }}">
+                        <i class="material-icons">library_books</i>
+                        <span>Posts</span>
                     </a>
                 </li>
 

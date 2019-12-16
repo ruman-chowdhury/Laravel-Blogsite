@@ -14,35 +14,41 @@
     <div class="container-fluid">
 
         <div class="block-header">
-                <a class="btn btn-info waves-effect" href="{{ route('admin.post.create') }}">
+                <a class="btn btn-info waves-effect" href="{{ route('author.post.create') }}">
                     <i class="material-icons">add</i>
                     <span>Add New Post</span>
                 </a>
             </div>
 
+    @if(session('msg'))
+            <span class="alert alert-warning text-right">
+                {{ session('msg') }}
+            </span>
+    @endif
+
             <!-- Exportable Table -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-
-                        <div class="header bg-green">
-                            <h2 >
-                               All Posts
+                        <div class="header bg-grey">
+                            <h2>
+                                Author Post Table
                             </h2>
 
-                            <!-- Search Bar -->
-                            <div class="search-bar">
-                                <div class="search-icon">
-                                    <i class="material-icons">search</i>
-                                </div>
-                                <input type="text" placeholder="START TYPING...">
-                                <div class="close-search">
-                                    <i class="material-icons">close</i>
-                                </div>
-                            </div>
-                            <!-- #END# Search Bar -->
-                        </div>
+                            <ul class="header-dropdown m-r--5">
+                                <li class="dropdown">
+                                    <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <i class="material-icons">more_vert</i>
+                                    </a>
+                                    <ul class="dropdown-menu pull-right">
+                                        <li><a href="javascript:void(0);">Action</a></li>
+                                        <li><a href="javascript:void(0);">Another action</a></li>
+                                        <li><a href="javascript:void(0);">Something else here</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
 
+                        </div>
                         <div class="body">
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-hover dataTable js-exportable">
@@ -95,20 +101,17 @@
                                             </th>
                                             <th>{{ $row->created_at }}</th>
                                             <th>
-
-                                                <a class="btn btn-dark waves-effect"  href="{{route('admin.post.view',$row->id)}}">
+                                                <a class="btn btn-dark waves-effect"  href="{{route('author.post.view',$row->id)}}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
 
-                                                <a class="btn btn-info btn-sm waves-effect" href="{{route('admin.post.edit',$row->id)}}">
+                                                <a class="btn btn-info btn-sm waves-effect" href="{{route('author.post.edit',$row->id)}}">
                                                     <i class="material-icons">edit</i>
                                                 </a>
 
-                                                <a class="btn btn-danger btn-sm waves-effect" href="{{route('admin.post.delete',$row->id)}}" onclick="return confirm('Are you sure to delete?')">
+                                                <a class="btn btn-danger btn-sm waves-effect" href="{{route('author.post.delete',$row->id)}}" onclick="return confirm('Are you sure to delete?')">
                                                     <i class="material-icons">delete</i>
                                                 </a>
-
-
 
                                             </th>
                                         </tr>
@@ -148,44 +151,5 @@
     <script src="{{ asset('user/frontend/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }} "></script>
     <script src="{{ asset('user/frontend/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
 
-    <!-- SweetAlert -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-
-    <script type="text/javascript">
-        /* ============SweetAlert===================== */
-        function deleteinfo(id){
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-            })
-
-            swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "You want to delete this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes,Delete',
-                cancelButtonText: 'No,Cancel',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.value) {
-
-                    event.preventDefault();
-                    document.getElementById('form-id').submit();
-
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                }
-            })
-
-        }
-
-    </script>
 
 @endpush

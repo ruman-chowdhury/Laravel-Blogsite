@@ -18,16 +18,17 @@
                     <i class="material-icons">add</i>
                     <span>Add New Post</span>
                 </a>
-            </div>
+        </div>
+
 
             <!-- Exportable Table -->
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
 
-                        <div class="header bg-green">
+                        <div class="header bg-pink">
                             <h2 >
-                               All Posts
+                               Pending Posts
                             </h2>
 
                             <!-- Search Bar -->
@@ -64,7 +65,7 @@
                                     <tbody>
 
 @php $k=1; @endphp
-@forelse($allData as $row)
+@forelse($pendingData as $row)
 
                                         <tr>
                                             <th> {{ $k++ }} </th>
@@ -96,6 +97,18 @@
                                             <th>{{ $row->created_at }}</th>
                                             <th>
 
+                                                @if($row->is_approved == false)
+                                                    <button type="submit" class="btn btn-success waves-effect " onclick="approvePost({{ $row->id }})">
+                                                        <i class="material-icons">done</i>
+                                                    </button>
+
+                                                    <form action="{{ route('admin.post.approve',$row->id) }}" method="post" id="approval-form" style="display: none">
+                                                        {{ csrf_field() }}
+                                                    </form>
+
+                                                @endif
+
+
                                                 <a class="btn btn-dark waves-effect"  href="{{route('admin.post.view',$row->id)}}">
                                                     <i class="material-icons">visibility</i>
                                                 </a>
@@ -107,8 +120,6 @@
                                                 <a class="btn btn-danger btn-sm waves-effect" href="{{route('admin.post.delete',$row->id)}}" onclick="return confirm('Are you sure to delete?')">
                                                     <i class="material-icons">delete</i>
                                                 </a>
-
-
 
                                             </th>
                                         </tr>
@@ -131,7 +142,7 @@
             </div>
             <!-- #END# Exportable Table -->
 
-    </div>
+    </div> <!--container-->
 
 @endsection
 
@@ -148,12 +159,16 @@
     <script src="{{ asset('user/frontend/plugins/jquery-datatable/extensions/export/buttons.html5.min.js') }} "></script>
     <script src="{{ asset('user/frontend/plugins/jquery-datatable/extensions/export/buttons.print.min.js') }}"></script>
 
+
+
     <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 
     <script type="text/javascript">
+
         /* ============SweetAlert===================== */
-        function deleteinfo(id){
+
+        function approvePost(id){
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
                     confirmButton: 'btn btn-success',
@@ -164,26 +179,29 @@
 
             swalWithBootstrapButtons.fire({
                 title: 'Are you sure?',
-                text: "You want to delete this!",
+                text: "You want to approve this!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonText: 'Yes,Delete',
-                cancelButtonText: 'No,Cancel',
+                confirmButtonText: 'Yes, Approve it!',
+                cancelButtonText: 'No, cancel!',
                 reverseButtons: true
             }).then((result) => {
                 if (result.value) {
 
                     event.preventDefault();
-                    document.getElementById('form-id').submit();
+                    document.getElementById('approval-form').submit();
 
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
+                } else if (
+                    /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your post remain pending :)',
+                        'info'
                     )
                 }
             })
-
         }
 
     </script>

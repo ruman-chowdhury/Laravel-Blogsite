@@ -14,13 +14,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-})->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+
 
 /*
  * as:like naming route( admin.dashboard,admin.login etc)
@@ -32,8 +30,22 @@ Route::group(['as'=>'admin.', 'prefix'=>'admin', 'namespace'=>'Admin', 'middlewa
 
     Route::get('/dashboard','AdminController@dashboard')->name('dashboard');
     Route::get('/post','PostController@showIndex')->name('post');
+
     Route::get('/post/create','PostController@create')->name('post.create');
     Route::post('/post/store','PostController@store')->name('post.store');
+
+    Route::get('/post/edit/{id}','PostController@edit')->name('post.edit');
+    Route::post('/post/update/{id}','PostController@update')->name('post.update');
+
+    Route::get('/post/view/{id}','PostController@view')->name('post.view');
+    Route::get('/post/delete/{id}','PostController@delete')->name('post.delete');
+
+    Route::get('/post/pending','PostController@pending')->name('post.pending');
+    Route::post('/post/approve/{id}','PostController@approve')->name('post.approve');
+
+    Route::get('/subscriber','SubscriberController@index')->name('subscriber');
+    Route::post('/subscriber/delete/{id}','SubscriberController@destroy')->name('subscriber.delete');
+
 
 });
 
@@ -41,5 +53,18 @@ Route::group(['as'=>'admin.', 'prefix'=>'admin', 'namespace'=>'Admin', 'middlewa
 Route::group(['as'=>'author.', 'prefix'=>'author', 'namespace'=>'Author', 'middleware'=>['auth','checkAuthor']],function(){
 
     Route::get('/dashboard','AuthorController@dashboard')->name('dashboard');
+    Route::get('/post','PostController@showIndex')->name('post');
+
+    Route::get('/post/create','PostController@create')->name('post.create');
+    Route::post('/post/store','PostController@store')->name('post.store');
+
+    Route::get('/post/edit/{id}','PostController@edit')->name('post.edit');
+    Route::post('/post/update/{id}','PostController@update')->name('post.update');
+
+    Route::get('/post/view/{id}','PostController@view')->name('post.view');
+    Route::get('/post/delete/{id}','PostController@delete')->name('post.delete');
 
 });
+
+//front page subscriber
+Route::post('/subscriber','SubscriberController@store')->name('subscriber');
